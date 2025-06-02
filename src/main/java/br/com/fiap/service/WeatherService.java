@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WeatherService {
 
     private final WebClient webClient;
-    private final String API_KEY = "e347ee388d4c161a4050feb25ab4fd1f";
+    private final String API_KEY = "";
 
     @Autowired
     public WeatherService(WebClient webClient) {
