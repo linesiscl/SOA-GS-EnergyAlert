@@ -27,3 +27,7 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     operationsSorter: method
+
+weather:
+  api:
+    key: 7a6fd8c2f5180b86bdc1001b59c22c6a

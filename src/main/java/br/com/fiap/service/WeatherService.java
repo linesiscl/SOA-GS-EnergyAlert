@@ -2,36 +2,32 @@ package br.com.fiap.service;
 
 import br.com.fiap.dto.TempoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class WeatherService {
 
-    private final WebClient webClient;
-    private final String API_KEY = "";
+    @Value("${weather.api.key}")
+    private String apiKey;
 
-    @Autowired
-    public WeatherService(WebClient webClient) {
-        this.webClient = webClient;
-    }
+    private final WebClient webClient = WebClient.create("https://api.openweathermap.org");
 
-    public TempoDTO obterClimaPorCidade(String cidade) {
-        return webClient
-                .get()
+    public TempoDTO buscarClimaPorCep(String cep) {
+        return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .scheme("https")
                         .host("api.openweathermap.org")
                         .path("/data/2.5/weather")
-                        .queryParam("q", cidade)
-                        .queryParam("appid", API_KEY)
+                        .queryParam("q", cep) // ou usar "zip" se for CEP no formato ZIP+PAÍS
+                        .queryParam("appid", apiKey)
                         .queryParam("units", "metric")
                         .queryParam("lang", "pt_br")
-                        .build()
-                )
+                        .build())
                 .retrieve()
                 .bodyToMono(TempoDTO.class)
-                .block(); // síncrono
+                .block();
     }
 }
 

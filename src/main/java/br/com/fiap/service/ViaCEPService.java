@@ -7,20 +7,15 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class ViaCEPService {
-    private final WebClient webClient;
 
-    @Autowired
-    public ViaCEPService(WebClient webClient) {
-        this.webClient = webClient;
-    }
-
+    private final WebClient webClient = WebClient.create("https://viacep.com.br/ws");
 
     public EnderecoDTO buscarEnderecoPorCep(String cep) {
         return webClient
                 .get()
-                .uri("https://viacep.com.br/ws/{cep}/json", cep)
+                .uri("/{cep}/json", cep)
                 .retrieve()
                 .bodyToMono(EnderecoDTO.class)
-                .block(); // uso síncrono
+                .block(); // Síncrono
     }
 }
