@@ -20,19 +20,5 @@ public class TecnicoController {
         return tecnicoRepository.save(tecnico);
     }
 
-    @GetMapping
-    public List<Tecnico> listarTodos() {
-        return tecnicoRepository.findAll();
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String senha) {
-        Tecnico tecnico = tecnicoRepository.findByEmail(email);
-        if (tecnico != null && tecnico.getSenha().equals(senha)) {
-            return "Login de técnico bem-sucedido!";
-        } else {
-            return "Email ou senha inválidos!";
-        }
-    }
 }
 
