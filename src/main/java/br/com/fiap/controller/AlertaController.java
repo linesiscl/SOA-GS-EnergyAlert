@@ -23,7 +23,7 @@ public class AlertaController {
     private WeatherService weatherService;
 
     @PostMapping("/emitir")
-    public Alerta emitir(@RequestBody Alerta alerta, @RequestParam String tecnicoEmail) {
+    public Alerta emitir(@RequestBody Alerta alerta) {
         try {
             TempoDTO tempo = weatherService.buscarClimaPorCep(alerta.getCep());
 
@@ -33,7 +33,6 @@ public class AlertaController {
                 String descricao = tempo.getWeather().get(0).getDescription();
                 Double temperatura = tempo.getMain().getTemp();
                 alerta.setMensagem("Clima atual: " + descricao + ", temperatura: " + temperatura + "°C");
-                alerta.setTecnicoEmail(tecnicoEmail);
             }
 
         } catch (Exception e) {
